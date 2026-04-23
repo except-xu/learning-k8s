@@ -1,0 +1,70 @@
+mode: standalone
+
+rootUser: "admin"
+rootPassword: "magedu.com"
+
+replicas: 1
+
+persistence:
+  enabled: true
+  size: 50Gi
+  storageClass: "openebs-minio-localpv"
+
+resources:
+  requests:
+    cpu: 500m
+    memory: 2Gi
+
+service:
+  type: ClusterIP
+  port: 9000
+
+consoleService:
+  type: ClusterIP
+  port: 9001
+
+## -----------------------------
+## MinIO API Service (9000)
+## -----------------------------
+service:
+  type: ClusterIP
+  port: 9000
+
+## -----------------------------
+## MinIO Console Service (9001)
+## -----------------------------
+consoleService:
+  type: LoadBalancer     # 通过 LoadBalancer 暴露 Console
+  port: 9001
+  annotations: {}        # 如需指定 LB 类型可在此添加
+
+
+## -----------------------------
+## Ingress for MinIO API (9000)
+## -----------------------------
+ingress:
+  enabled: false   # 如需开放 API，可改为 true
+  ingressClassName: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+  hosts:
+    - minio.magedu.com.com
+  paths:
+    - /
+  tls: []
+
+
+## ------------------------------------
+## Ingress for MinIO Console (9001)
+## ------------------------------------
+consoleIngress:
+  enabled: true
+  ingressClassName: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+  hosts:
+    - minio-console.magedu.com
+  paths:
+    - /
+  tls: []
