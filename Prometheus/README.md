@@ -20,7 +20,8 @@ helm install prometheus prometheus-community/prometheus --namespace monitoring -
 
 ```bash
 helm install prometheus prometheus-community/prometheus --namespace monitoring \
-          --values https://raw.githubusercontent.com/iKubernetes/k8s-prom/master/helm/prom-values.yaml --create-namespace
+          --values https://raw.githubusercontent.com/iKubernetes/learning-k8s/refs/heads/master/Prometheus/prom-values.yaml \
+          --create-namespace
 ```
 
 ### Prometheus Adapter
@@ -37,7 +38,7 @@ helm install prometheus-adapter prometheus-community/prometheus-adapter --values
 
 ```bash
 helm install prometheus-adapter prometheus-community/prometheus-adapter --namespace monitoring \
-          --values https://raw.githubusercontent.com/iKubernetes/k8s-prom/master/helm/prom-adapter-values.yaml 
+          --values https://raw.githubusercontent.com/iKubernetes/learning-k8s/refs/heads/master/Prometheus/prom-adapter-values.yaml 
 ```
 
 #### 规则配置说明
@@ -92,6 +93,15 @@ kubectl get --raw /apis/custom.metrics.k8s.io/v1beta1
 helm install --name-template prometheus-blackbox-exporter  prometheus-community/prometheus-blackbox-exporter \
           -f blackbox-exporter-values.yaml -n monitoring
 ```
+
+或者，也可以运行如下命令，直接加载在线的values文件，部署Prometheus Adapter组件。
+
+```bash
+helm install prometheus-adapter prometheus-community/prometheus-adapter --namespace monitoring \
+          --values https://raw.githubusercontent.com/iKubernetes/learning-k8s/refs/heads/master/Prometheus/blackbox-exporter-values.yaml 
+```
+
+#### 
 
 随后，需要在Prometheus的values文件中，启用额外的Scrape Job，以关联Blackbox Exporter。一个示例配置如下，注意该字段的值必须为字符型数据，因此需要在字段后添加“|”。
 
