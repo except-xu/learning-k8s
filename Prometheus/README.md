@@ -10,7 +10,7 @@
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts 
 ```
 
-运行如下命令，即可加载本地的values文件，部署Prometheus生态组件。本示例中，Prometheus的版本被限定在“v2”的版本上，使用的是“v2.55.1”的版本。若要移除该限制，注释掉prom-values.yaml文件中的“server.image.tag”即可。
+运行如下命令，即可加载本地的values文件，部署Prometheus生态组件。
 
 ```bash
 helm install prometheus prometheus-community/prometheus --namespace monitoring --values prom-values.yaml --create-namespace
@@ -80,18 +80,6 @@ Prometheus Adapter通过一组“发现（discovery）”规则（rules）来确
 
 ```bash
 kubectl get --raw /apis/custom.metrics.k8s.io/v1beta1
-```
-
-部署示例应用metrcis app，它附带有“http_requests_total”指标。
-
-```bash
-kubectl apply -f https://raw.githubusercontent.com/iKubernetes/k8s-prom/master/prometheus-adpater/example-metrics/metrics-example-app.yaml
-```
-
-待Metrics App的Pod就绪后，等待Prometheus Server的几个指标抓取周期，即可尝试获取由规则生成自定义指标http_requests_per_second。
-
-```bash
-kubectl get --raw /apis/custom.metrics.k8s.io/v1beta1/namespaces/default/pods/*/http_requests_per_second | jq .
 ```
 
 

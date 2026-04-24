@@ -1,7 +1,7 @@
 # learning-k8s
 本项目是[马哥教育](http://www.magedu.com)的Kubernetes入门与进阶专题课程的实践代码库。
 
-Kubernetes初学者资料~
+Kubernetes入门、进阶与实践学习资料~
 
 - ansible-k8s-install目录：基于ansible和kubeadm部署Kubernetes集群的playbook
 - MetalLB目录：MetalLB的地址池和通告机制资源对象示例
@@ -14,6 +14,8 @@ Kubernetes初学者资料~
 - gitlab目录：部署Gitlab；
 - OpenELB目录：部署OpenELB；
 - Kuboard目录：部署Kuboard；
+- MinIO目录：部署和使用MinIO；
+- Prometheus：Helm部署Prometheus及相关的组件；
 
 ## iKubernetes公众号
 
